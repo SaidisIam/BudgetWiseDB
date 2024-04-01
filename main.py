@@ -1,6 +1,5 @@
 import psycopg2
 import conf 
-
 from views import StatisticsView, UsersView
 
 def main():
@@ -9,44 +8,46 @@ def main():
 
     while True:
         print('1 - Statistic \n2 - Users \n3 - Exit')
-        command = input('Введите комманду - ')
+        command = input('Enter command - ')
         if command == '1':
+            stat_view = StatisticsView(cur)
             while True:
-                print('1 - посмотреть все статистики \n2 поиск статистик \n3 добавить статистику \n4 выйти')
-                command = input('Введите комманду - ')
-                book = StatisticsView(cur)
-                if command == '1':
-                    book.view_all_income()
-                # elif command == '2':
-                #     book.view_search_book()
-                elif command == '3':
-                    book.view_add_income()
+                print('1 - View all statistics\n2 - Search statistics\n3 - Add statistic\n4 - Back')
+                sub_command = input('Enter sub command - ')
+                if sub_command == '1':
+                    stat_view.view_all_income()
+                elif sub_command == '2':
+                    stat_view.view_search_users_income()
+                elif sub_command == '3':
+                    stat_view.view_add_income()
                     conn.commit()
-                elif command == '4':
-                    print('Вернулись в Меню')
+                elif sub_command == '4':
+                    print('Back to main menu')
                     break
+                else:
+                    print('Invalid command')
         elif command == '2':
+            user_view = UsersView(cur)
             while True:
-                print('1 - посмотреть всех user \n2 поиск user \n3 добавить user \n4 выйти')
-                command = input('Введите комманду - ')
-                author = UsersView(cur)
-                if command == '1':
-                    author.view_all_users()
-                elif command == '2':
-                    author.view_search_user()
-                elif command == '3':
-                    author.view_add_users()
+                print('1 - View all users\n2 - Search user\n3 - Add user\n4 - Back')
+                sub_command = input('Enter sub command - ')
+                if sub_command == '1':
+                    user_view.view_all_users()
+                elif sub_command == '2':
+                    user_view.view_search_users()
+                elif sub_command == '3':
+                    user_view.view_add_users()
                     conn.commit()
-                elif command == '4':
-                    print('Вернулись в Меню')
+                elif sub_command == '4':
+                    print('Back to main menu')
                     break
-                    
+                else:
+                    print('Invalid command')
         elif command == '3':
-            print('Вы вышли из программы')
+            print('Exiting program')
             break
-                
-        
-        
+        else:
+            print('Invalid command')
 
     cur.close()
     conn.close()

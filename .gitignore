@@ -1,4 +1,6 @@
+env
 conf.py
 draft.txt
 finance.txt
 __pycache__
+.gitignore
